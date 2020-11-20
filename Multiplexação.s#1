@@ -4085,21 +4085,6 @@ single cathode, 13 mm</description>
 <sheets>
 <sheet>
 <plain>
-<text x="180.34" y="0" size="1.778" layer="92">U</text>
-<text x="139.7" y="-15.24" size="1.778" layer="92">D</text>
-<text x="93.98" y="-12.7" size="1.778" layer="92">C</text>
-<text x="35.56" y="-12.7" size="1.778" layer="92">M</text>
-<text x="50.8" y="48.26" size="1.778" layer="92">C1</text>
-<text x="53.34" y="50.8" size="1.778" layer="92">C0</text>
-<text x="48.26" y="45.72" size="1.778" layer="92">C2</text>
-<text x="129.54" y="91.44" size="1.778" layer="92">C3</text>
-<text x="15.24" y="7.62" size="1.778" layer="92">a</text>
-<text x="12.7" y="5.08" size="1.778" layer="92">b</text>
-<text x="10.16" y="2.54" size="1.778" layer="92">c</text>
-<text x="7.62" y="0" size="1.778" layer="92">d</text>
-<text x="5.08" y="-2.54" size="1.778" layer="92">e</text>
-<text x="17.78" y="10.16" size="1.778" layer="92">f</text>
-<text x="20.32" y="12.7" size="1.778" layer="92">g</text>
 </plain>
 <instances>
 <instance part="U$1" gate="G$1" x="60.96" y="30.48"/>
