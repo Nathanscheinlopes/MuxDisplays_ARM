@@ -8,7 +8,7 @@ GPIO.
 espa?o)
 ? Todos os displays devem aparentar o mesmo brilho.
 ? N?o pode ocorrer flicker (cintila??o) na exibi??o da mensagem
-Entreg?veis :
+Entregáveis :
 
 ? Diagrama esquem?tico do circuito
 ? C?digo-fonte devidamente documentado.
