@@ -32,8 +32,8 @@ int main()
     //VARIAVEIS//
     uint16_t catodo[] = {1111110,1111101,1101111,0111111};//Isso vai assegurar que apenas um catodo estará em nivel baixo ao mesmo tempo
     uint16_t msg[] = {num0,num1,num2,num3,num4,num5,num6,num7,num8,num9};//Por enquanto, 0 a 9, para testes
-    uint16_t kat,jj=0,ii=0;
-
+    uint16_t kat,jj=0,ii=0,duni,ddez,dcem,dmil;
+    
     while
     {
         AlternarCatodo(jj);
