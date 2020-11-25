@@ -10,6 +10,13 @@ espaço)
 #include "stm32f4xx.h"
 #include "BinariosDisplay.h"//biblioteca com defines de binarios para o alfabeto
 
+uint16_t pc7,pb6,pb3,pb4,pa5; 
+
+
+void AlternarCatodo(uint16_t catodo[],uint16_t jj);
+void PassosDisplay();
+void LigarDisplay(uint16_t msg[],uint16_t ii);
+
 int main()
 {
     //LIGANDO CLOCK REGISTRADORES//
@@ -33,18 +40,18 @@ int main()
     uint16_t catodo[] = {1111110,1111101,1101111,0111111};//Isso vai assegurar que apenas um catodo estará em nivel baixo ao mesmo tempo
     uint16_t msg[] = {num0,num1,num2,num3,num4,num5,num6,num7,num8,num9};//Por enquanto, 0 a 9, para testes
     uint16_t kat,jj=-1,ii=0,duni,ddez,dcem,dmil;
-    
+
     while
     {
-        AlternarCatodo(jj);
+        AlternarCatodo(jj,catodo);
         //PassosDisplay(ii);
-        LigarDisplay(ii);  
+        LigarDisplay(ii,msg[]);  
     }
 
 
 
 }
-void AlternarCatodo(uint16_t catodo[])//5ms
+void AlternarCatodo(uint16_t catodo[],uint16_t jj)//5ms
 {
     if(TIM11->SR & TIM_SR_UIF)
     {
@@ -70,20 +77,19 @@ void PassosDisplay()
     }
 }
 
-void LigarDisplay(uint16_t msg)
-{
-        uint16_t pc7,pb6,pb3,pb4,pa5;        
+void LigarDisplay(uint16_t msg[],uint16_t ii)
+{     
         pc7 = msg[ii] & 0b1000000;
         pc7 = pc7 << 1;//pc7 como pc6
         pb6 = msg[ii] & 0b0100000;
         pb6 = pb6 << 1;//pb6 como pb5
-        GPIOC->ODR = ((msg[ii] & (GPIO_ODR_ODR_0 | GPIO_ODR_ODR_1) | pc7));
         pb3 = msg[ii] & 0b0000100;
         pb3 = pb3 << 6;//pb8 como pb3
         pb4 = msg[ii] & 0b0001000;
         pb4 = pb4 << 6;//pb9 como pb4
         pa5 = msg[ii] & 0b0010000;
         pa5 = pa5 << 3;//pa7 como pa5 
-        GPIOB->ODR = pb3 | pb4 | pb6; 
         GPIOA->ODR |= pa5;
+        GPIOB->ODR = pb3 | pb4 | pb6;
+        GPIOC->ODR = ((msg[ii] & (GPIO_ODR_ODR_0 | GPIO_ODR_ODR_1) | pc7));
 }
