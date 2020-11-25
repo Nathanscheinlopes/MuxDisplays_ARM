@@ -34,13 +34,13 @@ int main()
     TIM10->PSC = 1999;
     TIM10->ARR = 9999;
     TIM10->CR1 = 0x1;
-	TIM11->PSC = 1999;
-    TIM11->ARR = 9999;
+	TIM11->PSC = 19;
+    TIM11->ARR = 2999;
     TIM11->CR1 = 0x1;
     //VARIAVEIS//
     uint16_t catodo[] = {0b1111110,0b1111101,0b1101111,0b0111111};//Isso vai assegurar que apenas um catodo estará em nivel baixo ao mesmo tempo
     uint16_t msg[] = {num0,num1,num2,num3,num4,num5,num6,num7,num8,num9};//Por enquanto, 0 a 9, para testes
-    uint16_t kat,ii=3,duni,ddez,dcem,dmil;
+    uint16_t kat,ii=0,duni,ddez,dcem,dmil;
     uint16_t pc7,pb6,pb3,pb4,pa5;
     int jj=-1;
     while(1)
@@ -58,7 +58,12 @@ int main()
     	            }
     	        GPIOA->ODR = catodo[jj];
     	    }
-    	pc7 = msg[ii] & 0b1000000;
+            if(TIM10->SR & TIM_SR_UIF)
+            {
+            TIM10->SR = ~TIM_SR_UIF;
+            ii++;
+            }
+    	        pc7 = msg[ii] & 0b1000000;
     	        pc7 = pc7 << 1;//pc7 como pc6
     	        pb6 = msg[ii] & 0b0100000;
     	        pb6 = pb6 << 1;//pb6 como pb5
