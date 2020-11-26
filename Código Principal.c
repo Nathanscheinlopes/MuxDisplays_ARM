@@ -10,11 +10,9 @@ espaço)
 #include "stm32f4xx.h"
 #include "BinariosDisplay.h"//biblioteca com defines de binarios para o alfabeto
 
-uint16_t pc7,pb6,pb3,pb4,pa5;
-//int jj=-1;
+uint16_t pc7,pb6,pb3,pb4,pa5;//variaveis utilizadas na função LigarDisplay
 
 
-//void PassosDisplay();
 void LigarDisplay(uint16_t* msg, uint16_t aa);
 
 int main()
@@ -38,23 +36,22 @@ int main()
     TIM11->CR1 = 0x1;
     //VARIAVEIS//
     uint16_t catodo[] = {0b1111110,0b1111101,0b1101111,0b0111111};//Isso vai assegurar que apenas um catodo estará em nivel baixo ao mesmo tempo
-	uint16_t msg[] = {esp,e,d,n,a,l,d,o,esp,p,e,r,e,i,r,a,esp};//aqui é onde entra a mensagem, cada letra deve ser separada por virgula e o espaço é abreviado para esp, para numeros utilizar "numX" 
-    uint16_t ii=0,duni,ddez,dcem,dmil,aa;//declarando uma variavel de contagem e as de deslocamento 
-    duni=ddez=dcem=dmil=0;//zerando as variaveis para deslocar o simbolo no display para começar vazio 
-    uint16_t pc7,pb6,pb3,pb4,pa5;//variaveis utilizadas na função LigarDisplay 
+	uint16_t msg[] = {esp,e,d,n,a,l,d,o,esp,p,e,r,e,i,r,a,esp};//aqui é onde entra a mensagem, cada letra deve ser separada por virgula e o espaço é abreviado para esp, para numeros utilizar "numX"
+    uint16_t ii=0,duni,ddez,dcem,dmil,aa;//declarando uma variavel de contagem e as de deslocamento
+    duni=ddez=dcem=dmil=0;//zerando as variaveis para deslocar o simbolo no display para começar vazio
     int jj=-1;//variavel para fazer a leitura do vetor do cátodo
     while(1)
     {
      	if(TIM11->SR & TIM_SR_UIF)
     	    {
     	        TIM11->SR = ~TIM_SR_UIF;
-    	        if (++jj == 4)//número de displays presente na multiplexação 
+    	        if (++jj == 4)//número de displays presente na multiplexação
     	            {
-    	                jj =0;
+    	                jj =0;//reseta para o primeiro valor do vetor do catodo
     	            }
     	        GPIOA->ODR = catodo[jj];
 
-    	        switch(jj)//esse switch é responsável por alternar e deslocar para a próxima variável o valor escrito no primeiro display, registrando os passos 
+    	        switch(jj)//esse switch é responsável por alternar e deslocar para a próxima variável o valor escrito no primeiro display, registrando os passos
     	        {
     	        case 0://display mais a esquerda
     	       	aa=duni;
@@ -77,17 +74,17 @@ int main()
     	        break;
     	        }
     	    }
-            if(TIM10->SR & TIM_SR_UIF)//quando esse timer de 1s estourar, o display anda um passo 
+            if(TIM10->SR & TIM_SR_UIF)//quando esse timer de 1s estourar, o display anda um passo
             {
                 TIM10->SR = ~TIM_SR_UIF;
-                dmil = dcem;//deslocamento da variavel para ligar o display  
+                dmil = dcem;//deslocamento da variavel para ligar o display
                 dcem = ddez;//
                 ddez = duni;//
-                duni = ii;//atribuição da variavel de contagem ao display mais a direita 
+                duni = ii;//atribuição da variavel de contagem ao display mais a direita
                 ii++;
                 if(ii==18)//tamanho do vetor com a mensagem a ser exibida
                 {
-                 	ii=1;//reset tamanho do vetor 
+                 	ii=1;//reset tamanho do vetor
                 }
             }
     }
